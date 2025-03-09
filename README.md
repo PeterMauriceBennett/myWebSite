@@ -1,1 +1,1 @@
-Basic hello world test
+Gold Backed Stable Coin Basic Demo
