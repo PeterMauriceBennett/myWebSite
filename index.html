@@ -12,7 +12,7 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100vh; /* Ensure the page height fits the viewport */
             justify-content: space-between;
         }
         header, footer {
@@ -20,44 +20,47 @@
             font-size: 50%;
             color: white;
             padding: 0px;
-        
         }
         main {
             display: flex;
             flex-direction: column;
             align-items: center;
             flex-grow: 1;
-            justify-content: center;
+            justify-content: flex-start; /* Align sections closer to the top */
+            padding-top: 5px; /* Add slight padding for spacing */
         }
         .section {
             width: 90%;
             max-width: 660px;
             padding: 5px;
             background: white;
-            margin: 5px 0;
+            margin: 3px 0; /* Reduced vertical margin to save space */
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-           
-            #Section4 {
-            height: auto; /* Adjust height to fit content */
-            min-height: 150px; /* Ensure minimum height to accommodate textarea */
-            padding-top: 20px; /* Add padding to move textarea down */
         }
-        
+        #Section4 {
+            height: auto;
+            min-height: 80px; /* Further reduced height */
+            padding-top: 5px; /* Reduced padding */
+            margin-top: 0; /* Removed gap between Section4 and the header */
+        }
+        #Section4 textarea {
+            height: 50px; /* Reduced height of textarea */
+        }
         input, select, button, textarea {
-            margin-top: 5px;
-            padding: 10px;
-            font-size: 1em;
+            margin-top: 3px; /* Reduced margin to save space */
+            padding: 6px; /* Reduced padding for better fit */
+            font-size: 0.85em; /* Slightly reduced font size */
         }
         button {
             background-color: black;
             color: white;
             border: none;
             border-radius: 20px;
-            padding: 8px 16px;
+            padding: 6px 10px; /* Reduced padding for buttons */
             cursor: pointer;
         }
         button:disabled {
@@ -71,7 +74,10 @@
             align-items: center;
         }
         .small-input {
-            width: 20%;
+            width: 22.5%;
+            max-width: 400px;
+            height: auto;
+            padding: 4px;
             text-align: center;
             inputmode: decimal;
         }
@@ -79,25 +85,11 @@
             width: 70%;
         }
         .wide-textarea {
-            width: 75%;
-        }
-        p {
-            font-size: 80%;
-        }
-        .small-input {
-            width: 22.5%;
-            max-width: 400px;
-            height: auto;
-            padding: 4px;
-        }
-        .wide-textarea {
-            width: 90%;
-            max-width: 400px;
-            height: 100px;
-        
+            width: 108%;
+            max-width: 480px;
         }
         p, label {
-            font-size: 80%;
+            font-size: 75%; /* Reduced font size for better fit */
         }
         main {
             max-height: 90vh;
@@ -105,7 +97,7 @@
         }
         textarea {
             text-align: center;
-            background-color: lightpink; /* Set background color to light pink */
+            background-color: lightpink;
         }
         #numberControl1 {
             pointer-events: auto;
@@ -119,18 +111,15 @@
     <header>
         <h2 id="Label1" style="font-size: 170%;">ABC Trade Bank</h2>
     </header>
-   
     <main>
-        <!-- New Section4 added above Section1 -->
         <div class="section" id="Section4">
             <textarea id="multilineText2" rows="4" class="wide-textarea">User feedback messages appear here</textarea>
         </div>
-
         <div class="section" id="Section1">
             <p id="label7">Your current Coin Balance at the Bank is shown below</p>
-            <input type="number" id="numberControl3" readonly value="10" class="small-input" inputmode="integer">
+            <input type="number" id="numberControl3" readonly value="100" class="small-input" inputmode="integer">
             <p id="Label3">Enter your payment coin amount below</p>
-            <input type="number" id="numberControl1" inputmode="integer" onclick="this.focus();" min="0" max="5000" step="1" value="null" class="small-input">
+            <input type="number" id="numberControl1" inputmode="integer" min="0" max="5000" step="1" class="small-input">
             <button id="button1">Confirm</button>
             <p id="label5">USD value of above Coin amount at current LBMA Gold Spot Rate is shown below</p>
             <input type="text" id="numberControl2" readonly class="small-input">
@@ -149,10 +138,8 @@
             <button id="button3" disabled class="button-medium">Confirm Payment Instruction</button>
             <button id="button4" disabled class="button-medium">Send Payment</button>
             <button id="button5" disabled class="button-medium">Start Over</button>
-    
         </div>
     </main>
-    
     <script>
         document.getElementById('numberControl1').addEventListener('input', function() {
             let inputValue = parseFloat(this.value) || 0;
@@ -166,11 +153,11 @@
             let message = "";
 
             if (inputValue <= 0) {
-                message = "Please enter a coin payment amount that is greater than zero";
+                message = "Please enter a coin payment amount that is greater than zero.";
             } else if (inputValue > balanceValue) {
-                message = "Please enter a coin payment amount that is lower than your current coin balance at the Bank";
+                message = "Please enter a coin payment amount that is lower than your current coin balance at the Bank.";
             } else {
-                message = "Please proceed to selection of the Payment Beneficiary";
+                message = "Please proceed to selection of the Payment Beneficiary.";
             }
 
             document.getElementById('multilineText2').value = message;
@@ -184,7 +171,7 @@
         document.getElementById('button2').addEventListener('click', function() {
             let inputValue = document.getElementById('numberControl1').value;
             let selectedBeneficiary = document.getElementById('DropDown1').value;
-            let message = "Please confirm you want to send a coin payment of: " + inputValue + " to " + selectedBeneficiary + " By clicking the Confirm Payment Instruction Button and then the Send Payment Button. Otherwise click the Start Over Button";
+            let message = "Please confirm you want to send a coin payment of: " + inputValue + " to " + selectedBeneficiary + ".";
             document.getElementById('multilineText2').value = message;
 
             document.getElementById('button2').disabled = true;
@@ -207,28 +194,20 @@
             document.getElementById('multilineText2').value = "Sending Payment of " + inputValue + " to " + selectedBeneficiary;
 
             setTimeout(function() {
-                document.getElementById('multilineText2').value = "Payment of " + inputValue + " to " + selectedBeneficiary + " has been safely received and acknowledged by " + selectedBeneficiary;
+                document.getElementById('multilineText2').value = "Payment of " + inputValue + " to " + selectedBeneficiary + " has been safely received.";
                 document.getElementById('button4').disabled = true;
-            }, 3000);
+            }, 2000);
         });
 
         document.getElementById('button5').addEventListener('click', function() {
-            document.getElementById('numberControl1').value = "null"; // Set value to "null"
+            document.getElementById('numberControl1').value = ""; // Reset value
             document.getElementById('multilineText2').value = "User feedback messages appear here"; // Reset feedback message
             document.getElementById('DropDown1').selectedIndex = 0;
             document.getElementById('button1').disabled = false;
+            document.getElementById('button2').disabled = true;
             document.getElementById('button3').disabled = true;
             document.getElementById('button4').disabled = true;
             document.getElementById('button5').disabled = true;
-        });
-
-        document.getElementById('numberControl1').addEventListener('focus', function() {
-            console.log('numberControl1 focused');
-        });
-
-        document.getElementById('numberControl1').addEventListener('click', function() {
-            console.log('numberControl1 clicked - forcing focus');
-            this.focus();
         });
     </script>
 </body>
